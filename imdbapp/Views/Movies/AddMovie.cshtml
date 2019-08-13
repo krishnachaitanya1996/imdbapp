@@ -1,0 +1,81 @@
+﻿@model imdbapp.ViewModel.ViewMovies
+
+@{
+    ViewData["Title"] = "AddMovie";
+}
+
+<h1>AddMovie</h1>
+@ViewBag.SuccessMsg
+
+<h4>Movies</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddMovie">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="actorid" class="control-label"></label>
+                @Html.ListBoxFor(model => model.Actors, new MultiSelectList(ViewBag.actors, "Value", "Text"), new
+           {
+               @class = "Multiselect form-control multiple",
+               id = "actors",
+               data_placeholder = "Select Actors",
+               required = "required"
+           })
+                @*<select multiple>
+                        @foreach (var a in ViewBag.actors)
+                        {
+                            <option value="@a.Value" class="form-control">@a.Text</option>
+                        }
+                    </select>*@
+                <span asp-validation-for="actorid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="yearofrelease" class="control-label"></label>
+                <input asp-for="yearofrelease" class="form-control" />
+                <span asp-validation-for="yearofrelease" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="plot" class="control-label"></label>
+                <input asp-for="plot" class="form-control" />
+                <span asp-validation-for="plot" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="poster" class="control-label"></label>
+                <input asp-for="poster" class="form-control" />
+                <span asp-validation-for="poster" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="producerid" class="control-label"></label>
+                @Html.DropDownListFor(model => model.producerid, new SelectList(ViewBag.producers, "Value", "Text"), "select producer", new { @class = "form-control" })
+                <span asp-validation-for="producerid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.min.css">
+
+<!-- JS -->
+<script src="https://harvesthq.github.io/chosen/chosen.jquery.js"></script>"
+
+<script>
+    $(document).ready(function () {
+        alert("fdsf");
+        $(".Multiselect").chosen();
+
+    });
+</script>

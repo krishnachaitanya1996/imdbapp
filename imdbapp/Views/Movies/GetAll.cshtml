@@ -1,0 +1,70 @@
+﻿@using Entities;
+@model IEnumerable<Entities.Movies>
+
+@{
+    ViewData["Title"] = "GetAll";
+}
+
+<h1>GetAll</h1>
+
+@{
+var actorlist =(List<Actor>) ViewBag.actors;
+var prolist =(List<Producer>) ViewBag.producers;
+}
+
+<p>
+    <a asp-action="Addmovie">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Actor Name")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.yearofrelease)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.plot)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.poster)
+            </th>
+            <th>
+                @Html.DisplayName("Producer Name")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => actorlist.Where(p => p.actorid == item.actorid).Single().name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.yearofrelease)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.plot)
+            </td>
+            <td>@{ 
+                var base64 = Convert.ToBase64String(item.poster);
+                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            }
+            <img src="@imgSrc" width="50px" height="50px">
+                @*@Html.DisplayFor(modelItem => item.poster)*@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => prolist.Where(p => p.producerid == item.producerid).Single().name)
+            </td>
+            @*<td>
+                <a asp-action="Edit" asp-route-id="@item.movieid">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.movieid">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.movieid">Delete</a>
+            </td>*@
+        </tr>
+}
+    </tbody>
+</table>
